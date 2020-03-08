@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import MemberForm from "./components/Form";
-import MemberCard from "./components/Card";
+import MemberCards from "./components/Cards";
 import "./App.css";
 
 function App() {
-  const [formData, setFormData] = useState({ firstName: "", lastName: "" });
+  const [formData, setFormData] = useState([]);
   return (
     <div>
       <MemberForm formData={formData} setFormData={setFormData} />
-      <MemberCard formData={formData} />
+      <MemberCards formData={formData} />
     </div>
   );
 }
