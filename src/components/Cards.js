@@ -5,8 +5,8 @@ import "./Cards.css";
 const MemberCards = ({ formData }) => {
   return (
     <Grid>
-      {formData.map(tableData => (
-        <Grid.Column width={3}>
+      {formData.map((tableData, index) => (
+        <Grid.Column width={3} key={index}>
           <Card>
             <Card.Content>
               <Card.Header>{"Table " + tableData.table}</Card.Header>

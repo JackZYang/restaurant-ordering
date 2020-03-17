@@ -7,6 +7,7 @@ function App() {
   const [formData, setFormData] = useState([]);
   return (
     <div>
+      <h1>Restaurant Orders</h1>
       <MemberForm formData={formData} setFormData={setFormData} />
       <MemberCards formData={formData} />
     </div>
