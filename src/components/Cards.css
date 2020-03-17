@@ -5,3 +5,7 @@
 .ui.card {
   margin: 20px;
 }
+
+li {
+  list-style: none;
+}

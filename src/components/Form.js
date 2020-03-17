@@ -7,8 +7,7 @@ import "./Form.css";
 
 const validationSchema = Yup.object().shape({
   table: Yup.number().required("Required"),
-  quantity: Yup.number().required("Required"),
-  dish: Yup.string().required("Required")
+  dishes: Yup.string().required("Required")
 });
 
 const dishOptions = [
@@ -28,7 +27,7 @@ const MemberForm = ({ formData, setFormData }) => {
   const [dropValue, setDropValue] = useState("");
   return (
     <Formik
-      initialValues={{ table: "", quantity: "", dish: [] }}
+      initialValues={{ table: "", dishes: [] }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setFormData([...formData, values]);
@@ -39,21 +38,24 @@ const MemberForm = ({ formData, setFormData }) => {
       {({ values }) => (
         <FormikForm className="form">
           <TextInput label="Table" name="table" type="number" />
-          <TextInput label="Quantity" name="quantity" type="number" />{" "}
+          <TextInput label="Quantity" name="quantity" type="number" />
           <Dropdown
             label="Dish"
             value={dropValue}
             placeholder="Select Dish"
             options={dishOptions}
             onChange={(e, { value }) => {
-              values.dish.push(value);
+              values.quantity &&
+                values.dishes.push(values.quantity + " x " + value);
               setDropValue(value);
+              console.log(values);
             }}
+            search
             selection
             fluid
           />
-          {values.dish &&
-            values.dish.map((dish, index) => (
+          {values.dishes &&
+            values.dishes.map((dish, index) => (
               <Label className="dish" key={index}>
                 {dish}
               </Label>
