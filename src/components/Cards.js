@@ -11,8 +11,8 @@ const MemberCards = ({ formData }) => {
             <Card.Content>
               <Card.Header>{"Table " + tableData.table}</Card.Header>
               <Card.Description>
-                {tableData.dishes.map(dish => (
-                  <li>{dish}</li>
+                {tableData.dishes.map((dish, index) => (
+                  <li key={index}>{dish}</li>
                 ))}
               </Card.Description>
             </Card.Content>

@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { Formik, Form as FormikForm } from "formik";
-import { Button, Dropdown, Label } from "semantic-ui-react";
-import TextInput from "./TextInput";
+import { Button, Dropdown, Label, Input } from "semantic-ui-react";
 import * as Yup from "yup";
 import "./Form.css";
 
 const validationSchema = Yup.object().shape({
-  table: Yup.number().required("Required"),
-  dishes: Yup.string().required("Required")
+  table: Yup.number().required("Required")
 });
 
 const dishOptions = [
@@ -24,7 +22,9 @@ const dishOptions = [
 ];
 
 const MemberForm = ({ formData, setFormData }) => {
-  const [dropValue, setDropValue] = useState("");
+  const [dishName, setDishName] = useState(" ");
+  const [quantity, setQuantity] = useState(" ");
+
   return (
     <Formik
       initialValues={{ table: "", dishes: [] }}
@@ -35,32 +35,57 @@ const MemberForm = ({ formData, setFormData }) => {
         resetForm();
       }}
     >
-      {({ values }) => (
+      {({ values, handleChange }) => (
         <FormikForm className="form">
-          <TextInput label="Table" name="table" type="number" />
-          <TextInput label="Quantity" name="quantity" type="number" />
-          <Dropdown
-            label="Dish"
-            value={dropValue}
-            placeholder="Select Dish"
-            options={dishOptions}
-            onChange={(e, { value }) => {
-              values.quantity &&
-                values.dishes.push(values.quantity + " x " + value);
-              setDropValue(value);
-              console.log(values);
-            }}
-            search
-            selection
-            fluid
-          />
-          {values.dishes &&
-            values.dishes.map((dish, index) => (
-              <Label className="dish" key={index}>
-                {dish}
-              </Label>
-            ))}
-          <div>
+          <div className="dish-form">
+            <Input
+              className="input"
+              name="quantity"
+              placeholder="Quantity"
+              value={quantity}
+              type="number"
+              onChange={(_, { value }) => setQuantity(value)}
+            />
+            <Dropdown
+              label="Dish"
+              placeholder="Select Dish"
+              defaultValue={dishName}
+              options={dishOptions}
+              onChange={(e, { value }) => {
+                setDishName(value);
+              }}
+              search
+              selection
+              fluid
+            />
+            <Button
+              type="button"
+              color="orange"
+              onClick={() => {
+                quantity && values.dishes.push(quantity + " x " + dishName);
+                setDishName("");
+                setQuantity("");
+              }}
+            >
+              Add Dish
+            </Button>
+          </div>
+          <div className="table-form">
+            <Input
+              label="Table"
+              name="table"
+              type="number"
+              value={values.table}
+              onChange={handleChange}
+            />
+            <div className="dish-container">
+              {values.dishes &&
+                values.dishes.map((dish, index) => (
+                  <Label className="dish" key={index}>
+                    {dish}
+                  </Label>
+                ))}
+            </div>
             <Button type="submit" color="purple">
               Add
             </Button>
